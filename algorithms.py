@@ -1,10 +1,26 @@
-def coolex(binary):
+def is_dyck_word(word):
+    num_ones = 0
+    num_zeros = 0
+
+    for i, w in enumerate(word):
+        if w == "1":
+            num_ones += 1
+        else:
+            num_zeros += 1
+
+        if num_zeros > num_ones:
+            return False
+    return True
+
+def coolex(n):
     #binary: binarni niz s toliko 0 kot 1
+    binary = "1" * n + "0" * n
     binary0 = binary
     
     while True:
         #print(binary)
-        yield binary
+        if is_dyck_word(binary):
+            yield binary
 
         if "01" not in binary:
             # na zacetek dam zadnjega
