@@ -27,6 +27,44 @@ def coolex(binary):
             # zakljucim
             return
 
+def num_ones_zeros(binary):
+    ones = 0
+    zeros = 0
+    for i, b in enumerate(binary):
+        if b == "1":
+            if zeros > 0:
+                break
+            ones += 1
+        else:
+            zeros += 1
+    return ones, zeros
+
+def coolex2(n):
+    """
+    n: dolzina binarnega niza
+    """
+
+    first_dyck_word = "10" + "1" * (n-1) + "0" * (n-1)
+    dyck_word = first_dyck_word
+
+    while True:
+        yield dyck_word
+        p, q = num_ones_zeros(dyck_word)
+        
+        if p == n and q == n:
+            return
+        
+        if dyck_word[p+q+1] == "1":
+            dyck_word = "11" + "1" * (p-1) + "0" * q + "1" + dyck_word[p+q+2:]
+        elif dyck_word[p+q+1] == "0" and p == q:
+            dyck_word = "11" + "1" * (p-1) + "0" * q + "0" + dyck_word[p+q+2:]
+        else: # p > q
+            dyck_word = "10" + "1" * (p-1) + "0" * q + "1" + dyck_word[p+q+2:]
+
+    
+    return
+
+
 def first_two_blocks_sizes(dyck):
     size_1s = 0
     size_0s = 0
